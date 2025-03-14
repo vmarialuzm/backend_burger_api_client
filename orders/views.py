@@ -1,5 +1,4 @@
-from rest_framework import serializers
-from rest_framework import viewsets
+from rest_framework import serializers, viewsets
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Order, OrderDetail
 from .serializers import OrderSerializer, OrderDetailSerializer
