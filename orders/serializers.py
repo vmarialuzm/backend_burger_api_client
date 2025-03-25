@@ -3,10 +3,11 @@ from .models import Order, OrderDetail
 from products.models import Product
 
 class OrderDetailSerializer(serializers.ModelSerializer):
-    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
+    producto = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
+    order = serializers.PrimaryKeyRelatedField(queryset=Order.objects.all())
     class Meta:
         model = OrderDetail
-        fields = ('product', 'qty')
+        fields = ('id', 'producto', 'order', 'qty', 'subtotal')
 
 class OrderSerializer(serializers.ModelSerializer):
     products = OrderDetailSerializer(many=True, write_only=True)

@@ -28,11 +28,11 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser):
-    TIPO_USUARIO = [("mesero", "Mesero"), ("cliente", "Cliente")]
+    TIPO_USUARIO = [("mesero", "Mesero"), ("cliente", "Cliente"), ("jefe_cocina", "Jefe de cocina"), ("admin", "Administrador")]
     ESTADO_USUARIO = [("1", "Activo"), ("2", "Inactivo")]
 
     email = models.EmailField(_('email address'), unique=True)
-    tipo = models.CharField(max_length=10, choices=TIPO_USUARIO, default="mesero")
+    tipo = models.CharField(max_length=20, choices=TIPO_USUARIO, default="mesero")
     estado = models.CharField(max_length=1, choices=ESTADO_USUARIO, default="1")
 
     USERNAME_FIELD = 'email'
