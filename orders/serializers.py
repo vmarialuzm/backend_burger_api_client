@@ -3,11 +3,12 @@ from .models import Order, OrderDetail
 from products.models import Product
 
 class OrderDetailSerializer(serializers.ModelSerializer):
-    producto = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
-    order = serializers.PrimaryKeyRelatedField(queryset=Order.objects.all())
+    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(), source='producto')
+    
     class Meta:
         model = OrderDetail
-        fields = ('id', 'producto', 'order', 'qty', 'subtotal')
+        fields = ('product', 'qty')
+        read_only_fields = ('order', 'subtotal')
 
 class OrderSerializer(serializers.ModelSerializer):
     products = OrderDetailSerializer(many=True, write_only=True)
@@ -22,12 +23,10 @@ class OrderSerializer(serializers.ModelSerializer):
         total = 0
 
         for item in details_data:
-            product = item['product']
-            qty = item.get('qty', 1)
             order_detail = OrderDetail.objects.create(
                 order=order,
-                producto=product,
-                qty=qty
+                producto=item['producto'],
+                qty=item['qty']
             )
             total += order_detail.subtotal
         order.total = total

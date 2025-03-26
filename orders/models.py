@@ -3,11 +3,13 @@ from products.models import Product
 
 class Order(models.Model):
     ESTADOS = [
-        ("pendiente", "Pendiente"),
-        ("entregado", "Entregado")
+        ("pending", "Pendiente"),
+        ("in_preparation", "En preparación"),
+        ("ready", "Listo para entregar"),
+        ("cancelled", "Cancelado")
     ]
     client = models.CharField(max_length=100)
-    status = models.CharField(max_length=10, choices=ESTADOS, default="pendiente")
+    status = models.CharField(max_length=20, choices=ESTADOS, default="pending")
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
